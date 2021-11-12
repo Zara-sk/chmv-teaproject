@@ -1,0 +1,33 @@
+content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    color: #24563C;
+}
+
+content .cart-table {
+    border-collapse: collapse; 
+    color: #24563C;
+}
+
+content tr {
+    padding: 5px;
+    border: none;
+    border-bottom: 2px solid #CDE19E;
+    transition: opacity 0.2s;
+}
+
+content .cart-table tr:last-child {
+    border-bottom: none;
+}
+
+
+content .cart-table td {
+    padding: 15px 40px 15px 40px;
+}

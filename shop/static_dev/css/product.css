@@ -1,0 +1,118 @@
+content {
+
+}
+
+content .product {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+content .product .main-info {
+    display: flex;
+    /*align-items: center;*/
+}
+
+content .main-info .image {
+    height: 360px;
+    width: 500px;
+}
+
+content .main-info .text {
+    margin-left: 30px;
+    height: 360px;
+    width: 500px;
+}
+
+content .main-info .text .text-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+content .main-info .text a {
+    width: 130px;
+    background:#F6F6F6;
+    color:#24563C;
+    text-decoration:none;
+    display:block;
+    text-align:center;
+    margin:20px auto;
+    padding:10px 10px;
+    transition:all 0.3s;
+}
+content .main-info .text a:hover{
+    box-shadow:0px -3px 0 #CDE19E inset;
+}
+
+content .main-info .text .title {
+    font-size: 24px;
+    color: #24563C;
+    font-weight: 800;
+}
+
+content .main-info .text .price {
+    margin-top: 15px;
+    font-size: 18px;
+    color: #24563C;
+
+}
+
+content .main-info .text .description {
+    margin-right: 10px;
+    text-align: justify;
+    padding-right: 20px;
+    height: 270px;
+    overflow-y: auto;
+    margin-top: 15px;
+    font-size: 18px;
+    color: #24563C;
+}
+
+content .main-info .text .description::-webkit-scrollbar {
+    padding-left: 10px;
+    width: 6px;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+content .main-info .text .description::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #CDE19E;
+}
+
+.product-img {
+    width: 100%;
+}
+
+content .product .sub-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+    margin-bottom: 50px;
+    font-size: 18px;
+    color: #24563C;
+}
+
+content .product .sub-info .table {
+    border-collapse: collapse; 
+}
+
+content .product .sub-info .table tr {
+    padding: 5px;
+    border: none;
+    border-bottom: 2px solid #CDE19E;
+}
+/*content .product .sub-info .table tr th {margin-left: 400px;}
+
+content .product .sub-info .table tr td {margin-left: 400px;}*/
+
+content .product .sub-info .table tr:last-child {
+    border-bottom: none;
+}
+content .product .sub-info .table th {
+    padding: 15px 0 15px 30px;    
+}
+content .product .sub-info .table td {
+    padding: 15px 30px 15px 120px;
+}

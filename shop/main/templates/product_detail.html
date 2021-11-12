@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}TeaProject · {{product.title}}{% endblock title %}
+{% block style %}<link rel="stylesheet" type="text/css" href="{% static 'css/product.css' %}">{% endblock style %}
+
+{% block content %}
+<div class="product">
+    <div class="main-info">
+        <div class="image">
+            <img src="{{ product.image.url }}" alt="" class="product-img">
+        </div>
+        <div class="text">
+            <div class="text-header">
+                <div class="text-main">
+                    <div class="title">{{ product.title }}</div>
+                    <div class="price">{{ product.price }} ₽ / 100 гр.</div>
+                </div>
+                <a href="{% url 'add_to_cart' slug=product.slug %}" class="boot">
+                    <span>В корзину</span>
+                </a>
+            </div>
+            <div class="description">{{ product.description }}</div>
+
+        </div>
+    </div>
+    <div class="sub-info">
+        <p>Характеристики:</p>
+        <table class="table">
+          <tbody>
+          {% for f_name, f_value in product.get_features.items %}
+            <tr>
+              <th scope="row">{{ f_name }}</th>
+              <td>{{ f_value }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+
+    </div>
+</div>
+
+{% endblock content %}

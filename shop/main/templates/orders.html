@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block style %}<link rel="stylesheet" type="text/css" href="{% static 'css/orders.css' %}">{% endblock style %}
+{% block title %}TeaProject · Заказы{% endblock title %}
+{% block content %}
+<h2 id="cart-status">Список заказов {% if not orders.count %}отсутствует. Слышь, купи skyrim{% endif %}</h2>
+{% if orders.count %}
+<table class="cart-table">
+    <wrap-table>
+        <thead>
+            <tr>
+                <th scope="col">Номер</th>
+                <th scope="col">Сумма</th>
+                <th scope="col">Товар</th>
+                <th scope="col">Статус</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr id="">
+                <th scope="row">{{ order.id }}</th>
+                <td>{{ order.cart.final_price }} ₽</td>
+                <td>
+                    <ul>
+                        {% for item in order.cart.products.all %}
+                            <li>{{ item.product.title }} x {{item.quantity}}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>{{ order.get_status_display }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </wrap-table>
+</table>
+{% endif %}
+{% endblock content %}

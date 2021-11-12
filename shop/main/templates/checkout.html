@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block style %}<link rel="stylesheet" type="text/css" href="{% static 'css/checkout.css' %}">{% endblock style %}
+{% block title %}TeaProject · CheckOut{% endblock title %}
+
+{% block content %}
+<!-- {% if messages %}
+    {% for message in messages %}
+        <h3>{{ message }}</h3>
+    {% endfor %}
+{% endif %} -->
+
+<h2 id="cart-status">Оформление заказа {% if not cart.products.count %}невозможно. Ваша корзина пуста.{% endif %}</h2>
+{% if cart.products.count %}
+<table class="cart-table">
+    <wrap-table>
+        <thead>
+            <tr>
+                <th scope="col">Наименование</th>
+                <th scope="col">Изображение</th>
+                <th scope="col">Цена</th>
+                <th scope="col">Количество</th>
+                <th scope="col">Вес</th>
+                <th scope="col">Итоговая цена</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart.products.all %}
+            <tr id="{{ item.product.slug }}">
+                <th scope="row">{{ item.product.title }}</th>
+                <td><img class = "product-image" src="{{ item.product.image.url }}"></td>
+                <td><p>{{ item.product.price }} ₽</p></td>
+                <td id="{{ item.product.slug }}-value">{{ item.quantity }}</td>
+                <td id="{{ item.product.slug }}-weight" data-default="100">{{ item.get_weight }} гр.</td>
+                <td id="{{ item.product.slug }}-price" data-default="{{ item.product.price }}">{{ item.final_price }} ₽</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </wrap-table>
+</table>
+
+<h2 id="final_price" data-default="{{cart.final_price}}">Итого: {{cart.final_price}} ₽</h2>
+<h2>Пожалуйста, заполните следующую форму:</h2>
+
+<form action="{% url 'make_order' %}" method="POST">
+    <div class="order-form">
+        {% csrf_token %}
+        {{ form|crispy }}
+        
+    </div>
+    <input id="reg" class="submit" type="submit" value="Перейти к оплате">
+</form>
+
+{% endif %}
+{% endblock content %}
+{% block js %}
+<script>
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth() + 1; 
+var yyyy = today.getFullYear();
+
+if (dd < 10) {
+   dd = '0' + dd;
+}
+
+if (mm < 10) {
+   mm = '0' + mm;
+} 
+    
+today = yyyy + '-' + mm + '-' + dd;
+document.getElementById("id_order_date").setAttribute("min", today);
+document.getElementById("id_order_date").setAttribute("value", today);
+$('#div_id_address').hide();
+$('#id_address').val('none');
+$('#id_buying_type').change(function () {
+    console.log('cha');
+    var theValue = $(this).find('option:selected').text();
+    if (theValue === 'Самовывоз') {
+        $('#div_id_address').hide();
+        $('#id_address').val('none');
+
+        $('#div_id_address .error').remove();
+        $('.invalid-feedback').remove();
+        if ($('.error').length == 0) {
+            $('#reg').attr('disabled', false);
+        }
+    }
+    else {
+        $('#div_id_address').show();
+        $('#id_address').val('');
+    }
+    
+});
+
+$(document).ready(function() {
+    $(".number").keydown(function(event) {
+        // Allow: backspace, delete, tab, escape, and enter
+        if (event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 ||
+            // Allow: Ctrl+A
+            (event.keyCode == 65 && event.ctrlKey === true) ||
+            // Allow: home, end, left, right
+            (event.keyCode >= 35 && event.keyCode <= 39)) {
+            // let it happen, don't do anything
+            return;
+        } else {
+            // Ensure that it is a number and stop the keypress
+            if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)) {
+                event.preventDefault();
+            }
+        }
+    });
+    // Same function
+    $(".char").keydown(function(event) {
+        if (event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 ||
+            (event.keyCode == 65 && event.ctrlKey === true) ||
+            (event.keyCode >= 35 && event.keyCode <= 39)) {
+            // let it happen, don't do anything
+            return;
+        } else {
+            
+            if (event.keyCode <= 64 || event.keyCode >= 91) {
+                event.preventDefault();
+            }
+        }
+    });
+});
+
+function insertAfter(referenceNode, newNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
+
+$('input').blur(function(){
+    console.log('in');
+
+    if($(this).val() == '') {
+
+        var el = document.createElement("p");
+        el.innerHTML = "Пожалуйста, заполните поле.";
+        field = document.getElementById($(this).attr('id'));
+        el.style.display='block';
+        el.classList.add("error");
+        insertAfter(field, el);
+
+        $('#reg').attr('disabled', true);
+ 
+    }
+    else {
+        //  var pid = $(this).parent().attr("id");
+        // console.log($(this).attr('id'));
+        $('#' + $(this).parent().parent().attr('id') + ' .error').remove();
+        $('.invalid-feedback').remove();
+
+        if ($('.error').length == 0) {
+            $('#reg').attr('disabled', false);
+        }
+    }
+});
+</script>
+
+{% endblock js %}

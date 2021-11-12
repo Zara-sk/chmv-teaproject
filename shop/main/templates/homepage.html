@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">{% endblock style %}
+{% block title %}TeaProject · Главная{% endblock title %}
+{% block content %}
+<div class="block">
+    <h2>Новинки</h2>
+    <pre-slider>
+        <div class="slider">
+            {% for product in new_products %}
+            <a href="{{ product.get_absolute_url }}" class="pr_url">
+                <div class="product" style="background: url('{{product.image.url}}') no-repeat; background-size: contain;">
+                    <p class="p-title">{{product.title}}</p>
+                    <!-- <p class="p-country">[{{product.cultivation_country}}]</p> -->
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </pre-slider>
+</div>
+<div class="block">
+    <h2>Подборка чая</h2>
+    <pre-slider>
+        <div class="slider">
+            {% for product in stea %}
+            <a href="{{ product.get_absolute_url }}" class="pr_url">
+                <div class="product" style="background: url('{{product.image.url}}') no-repeat; background-size: contain;">
+                    <p class="p-title">{{product.title}}</p>
+                    <!-- <p class="p-country">[{{product.cultivation_country}}]</p> -->
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </pre-slider>
+</div>
+<div class="block">
+    <h2>Подборка напитков</h2>
+    <pre-slider>
+        <div class="slider">
+            {% for product in sdrink %}
+            <a href="{{ product.get_absolute_url }}" class="pr_url">
+                <div class="product" style="background: url('{{product.image.url}}') no-repeat; background-size: contain;">
+                    <p class="p-title">{{product.title}}</p>
+                    <!-- <p class="p-country">[{{product.cultivation_country}}]</p> -->
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </pre-slider>
+</div>
+
+{% endblock %}

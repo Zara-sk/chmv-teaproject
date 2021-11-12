@@ -1,0 +1,189 @@
+content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.lform {
+    height: 200px;
+}
+
+.login-form {
+    height: 130px;
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.login-form .form-group {
+    height: 35px;
+    /*position: relative;*/
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+    margin: 10px 0 10px 0;
+}
+
+.login-form .form-group label {
+    display: none;
+    left: calc(50% - 250px);
+    position: absolute;
+    width: 280px;
+    height: 35px;
+    line-height: 40px;
+    color: #24563C;
+    font-size: 20px;
+}
+input::-webkit-input-placeholder { 
+    color: lightgray;
+    font-weight: 400;
+}
+input::-moz-placeholder {
+    color: #ee1111;
+    font-weight: 400;
+}
+input:-ms-input-placeholder {
+    color: #ee1111;
+    font-weight: 400;
+}
+input:placeholder {
+    color #ee1111;
+    font-weight: 400;
+}
+
+.login-form .form-group p {
+    page-break-after: bot;: 10px;
+    left: calc(50% + 160px);
+    position: absolute;
+    width: 500px;
+    margin: 8px 0;
+    font-weight: 700;
+    color: #e24242;
+}
+
+
+.rform {
+    height: 200px;
+}
+
+.registration-form {
+    height: 180px;
+    width: 650px;
+    /*background-color: #22d;*/
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.registration-form .form-group {
+    height: 35px;
+    /*position: relative;*/
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+    margin: 10px 0 10px 0;
+}
+
+.registration-form .form-group label {
+    display: none;
+    left: calc(40% - 200px);
+    position: absolute;
+    width: 280px;
+    height: 35px;
+    line-height: 40px;
+    color: #24563C;
+    font-size: 20px;
+}
+
+.registration-form .form-group p {
+    page-break-after: bot;: 10px;
+    left: calc(50% + 160px);
+    position: absolute;
+    font-weight: 700;
+    width: 500px;
+    margin: 8px 0;
+    color: #e24242;
+}
+
+
+input:-webkit-autofill
+{
+    -webkit-text-fill-color: #24563C !important;
+    -webkit-box-shadow: 0 0 0px 1000px #F2F2F2 inset;
+    -webkit-text-size-adjust: 16px !important;
+}
+
+input:-internal-autofill-previewed {
+    font-size: 16px !important;
+}
+
+#id_email,
+#id_password,
+#id_confirm_password,
+#id_phone,
+#id_address,
+#id_first_name,
+#id_last_name {
+    left: calc(50% - 140px);
+    position: absolute;
+    width: 280px;
+    /*-webkit-text-fill-color: #24563C !important;*/
+    -webkit-background: #F2F2F2 !important;
+    color: #24563C;
+    background: #F2F2F2;
+    font-size: 16px;
+    font-weight: 700;
+    height: 35px;
+    border-radius: 20px;
+    border-width: 0;
+    line-height: 40px;
+    outline: none;
+    text-align: center;
+}
+
+#id_email:focus,
+#id_password:focus,
+#id_confirm_password:focus,
+#id_phone:focus,
+#id_address:focus,
+#id_first_name:focus,
+#id_last_name:focus {
+    border-width: 0;
+    border: 2px solid #24563C;
+}
+
+.wrap-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrap-btn button {
+    cursor: pointer;
+    width: 230px;
+    background:#F2F2F2;
+    color:#24563C;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration:none;
+    display:block;
+    text-align:center;
+    margin: -10px auto;
+    padding:10px 10px;
+    transition:all 0.3s;
+    border: 0;
+}
+.wrap-btn button:hover{
+    box-shadow:0px -4px 0 #CDE19E inset;
+}
+
+button:disabled {
+    color: #bbbbbb;
+    cursor: default;
+}
+
+button::disabled:hover {
+}

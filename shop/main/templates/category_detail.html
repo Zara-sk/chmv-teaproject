@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load search_filter %}
+
+{% load static %}
+
+{% block style %}<link rel="stylesheet" type="text/css" href="{% static 'css/category.css' %}">
+<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+
+{% endblock style %}
+{% block title %}TeaProject · {{category.name}}{% endblock title %}
+
+{% block content %}
+
+<div class="filter-box">
+    <form class="d-flex mt-3" action="{% url 'category_detail' slug=category.slug %}" method="GET">
+        <input class="search" name="search" type="search" id="search" placeholder="Поиск товара" aria-label="Search">
+        <button class="success se" type="submit">Поиск</button>
+      </form>
+    <hr>
+    <form action="{% url 'category_detail' slug=category.slug %}" method="GET">
+        {{ category|product_spec }}
+    <p class="btns">
+        <button class="success fr" type="submit">Поиск</button>
+        <button class="success fr" type="submit">Сбросить</button>
+    </p>
+    </form>
+</div>
+<div class="products-box">
+    <wrap-products>
+        {% for product in category_products %}
+            <div class="product-wrap">
+                <a href="{{ product.get_absolute_url }}" class="pr_url">
+                    <div class="product" style="background: url('{{product.image.url}}') no-repeat; background-size: contain;">
+                        <p class="p-title">{{product.title}}</p>
+                        <!-- <p class="p-country">[{{product.get_features.items}}]</p> -->
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </wrap-products>
+</div>
+
+{% endblock content %}
+
+{% block js %}
+
+<script>
+
+$('#search').keyup(function () {
+    var text = document.getElementById('search').value;
+    console.log(text);
+});
+
+</script>
+
+{% endblock js %}

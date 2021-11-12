@@ -1,0 +1,184 @@
+content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    color: #24563C;
+}
+
+content .cart-table {
+    border-collapse: collapse; 
+    color: #24563C;
+}
+
+content tr {
+    padding: 5px;
+    border: none;
+    border-bottom: 2px solid #CDE19E;
+    transition: opacity 0.2s;
+}
+
+content .cart-table tr:last-child {
+    border-bottom: none;
+}
+
+content .cart-table td {
+    padding: 15px 40px 15px 40px;
+}
+
+.product-image {
+    width: 75px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input:-webkit-autofill
+{
+    -webkit-text-fill-color: #24563C !important;
+    -webkit-box-shadow: 0 0 0px 1000px #F2F2F2 inset;
+}
+
+.order-form {
+    width: 800px;
+    /*background-color: #22d;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 160px;
+}
+
+.order-form .form-group {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+}
+
+.order-form .form-group label {
+    line-height: 30px;
+    color: #24563C;
+    font-size: 20px;
+}
+
+#id_first_name,
+#id_last_name,
+#id_phone,
+#id_address,
+#id_buying_type {
+    left: calc(50% - 160px);
+    position: absolute;
+    width: 320px;
+    color: #24563C;
+    font-size: 16px;
+    font-weight: 700;
+    height: 35px;
+    border-radius: 20px;
+    background: #F2F2F2;
+    border-width: 0;
+    line-height: 40px;
+    outline: none;
+    text-align: center;
+}
+
+#id_comment {
+    padding: 10px 10px 10px 10px;
+    left: calc(50% - 160px);
+    position: absolute;
+    width: 300px;
+    color: #24563C;
+    font-size: 16px;
+    font-weight: 700;
+    height: 145px;
+    border-radius: 20px;
+    background: #F2F2F2;
+    border-width: 0;
+    line-height: normal;
+    outline: none;
+    text-align: justify;
+    resize: none;
+}
+
+#id_comment::-webkit-scrollbar {
+    width: 0px;
+    background-color: rgba(0, 0, 0, 0);
+}
+#id_comment::-webkit-scrollbar-thumb {
+    border-radius: 30px;
+    background-color: #CDE19E;
+}
+
+#id_first_name:focus,
+#id_last_name:focus,
+#id_phone:focus,
+#id_address:focus,
+#id_buying_type:focus,
+#id_comment:focus,
+#id_order_date:focus {
+    border-width: 0;
+    border: 2px solid #24563C;
+}
+
+#id_order_date {
+    left: calc(50% - 75px);
+    padding-left: 2vw;
+    position: absolute;
+    width: 150px;
+    color: #24563C;
+    font-size: 16px;
+    font-weight: 700;
+    height: 35px;
+    border-radius: 20px;
+    background: #F2F2F2;
+    border-width: 0;
+    line-height: 40px;
+    outline: none;
+    text-align: center;
+}
+
+
+form .submit {
+    cursor: pointer;
+    width: 230px;
+    background:#F2F2F2;
+    color:#24563C;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration:none;
+    display:block;
+    text-align:center;
+    margin: -10px 0 40px 0;
+    padding:10px 10px;
+    transition:all 0.3s;
+    border: 0;
+
+}
+form .submit:hover{
+    box-shadow:0px -4px 0 #CDE19E inset;
+}
+
+.order-form .form-group p {
+    page-break-after: bot;: 10px;
+    left: calc(50% + 160px);
+    position: absolute;
+    width: 500px;
+    margin: 8px 0 0 20px;
+    font-weight: 700;
+    color: #e24242;
+}
+
+input:disabled {
+    color: #bbbbbb;
+    cursor: default;
+}
+
+input::disabled:hover {
+}

@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}<link rel="stylesheet" type="text/css" href="{% static 'css/cart.css' %}">{% endblock style %}
+{% block title %}TeaProject · Корзина{% endblock title %}
+{% block content %}
+
+<h2 id="cart-status">Ваша корзина {% if not cart.products.count %}пуста{% endif %}</h2>
+{% if cart.products.count %}
+<table class="cart-table">
+    <wrap-table>
+        <thead>
+            <tr>
+                <th scope="col">Наименование</th>
+                <th scope="col">Изображение</th>
+                <th scope="col">Цена</th>
+                <th scope="col">Количество</th>
+                <th scope="col">Вес</th>
+                <th scope="col">Итоговая цена</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart.products.all %}
+            <tr id="{{ item.product.slug }}">
+                <th scope="row">{{ item.product.title }}</th>
+                <td><img class = "product-image" src="{{ item.product.image.url }}"></td>
+                <td><p>{{ item.product.price }} ₽</p></td>
+                <td>
+                    <form action="{% url 'change_qty_cart' slug=item.product.slug %}" method="POST">
+                        {% csrf_token %}
+                        <div class="number">
+                            <button class="number-minus" type="button" onclick="change_qty('{{item.product.slug }}', -1) ">🢐</button>
+
+                            <input id="{{ item.product.slug }}-value" type="number" min="1" max="50" value="{{ item.quantity }}" readonly>
+
+                            <button class="number-plus" type="button" onclick="change_qty('{{item.product.slug }}', 1)">🢒</button>
+                        </div>
+                    </form>
+                </td>
+                <td id="{{ item.product.slug }}-weight" data-default="100">{{ item.get_weight }} гр.</td>
+                <td id="{{ item.product.slug }}-price" data-default="{{ item.product.price }}">{{ item.final_price }} ₽</td>
+                <td class="delete">
+                    <button class="delete_btn" type="button" onclick="delete_item('{{item.product.slug }}')">X</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </wrap-table>
+</table>
+<div class="final">
+    <h2 id="final_price" data-default="{{cart.final_price}}">Итого: {{cart.final_price}} ₽</h2>
+    <h2 id="checkout"><a href="{% url 'checkout' %}">Оформить заказ</a></h2>
+</div>
+{% endif %}
+
+{% endblock content %}
+{% block js %}
+<script>
+
+function delete_item(slug) {
+    document.getElementById(slug).classList.toggle('hide-tr');
+    $('#'+slug).hide(700, function(){
+        this.remove(); 
+    });
+
+    var table = document.getElementsByClassName("cart-table")[0];
+    var rows = table.rows.length - 2;
+
+    if (rows == 0) {
+        console.log("d");
+        table.remove();
+        document.getElementById("cart-status").innerHTML = "Ваша корзина пуста";
+        document.getElementById("final_price").remove();
+        document.getElementById("checkout").remove();
+    }
+    else {
+        var final = document.getElementById("final_price");
+        var final_n = parseFloat(final.getAttribute("data-default"));
+        var fp = parseFloat(document.getElementById(slug+"-price").getAttribute("data-default"));
+        var qty = parseInt(document.getElementById(slug+"-value").value);
+
+        var new_final = final_n - fp*qty;
+
+        final.setAttribute("data-default", new_final);
+        final.innerHTML = "Итого: " + new_final + ",00 ₽";
+    }
+    $.ajax({
+        url : 'delete-from-cart/' + slug + '/',
+        type : "POST",
+        data : {
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+        }
+    })
+
+}
+
+function change_qty(slug, step) {
+
+    var qty = document.getElementById(slug+"-value");
+    var fp = document.getElementById(slug+"-price");
+    var we = document.getElementById(slug+"-weight");
+
+    var final = document.getElementById("final_price");
+
+    var value = parseInt(qty.value);
+    qty.stepUp(step);
+
+    var new_price = parseFloat(fp.getAttribute("data-default")) * parseInt(qty.value);
+    var new_price_str = new_price + ",00 ₽";
+
+    var new_weight = 100 * parseInt(qty.value);
+    var new_weight_str = new_weight + " гр."
+
+    fp.innerHTML = new_price_str;
+    we.innerHTML = new_weight_str;
+
+    if ((value + step <= 50) && (value + step >= 1)){
+        var new_final = step*parseFloat(fp.getAttribute("data-default")) + parseFloat(final.getAttribute("data-default"));
+        final.setAttribute("data-default", new_final);
+        final.innerHTML = "Итого: " + new_final + ",00 ₽";
+    }
+    $.ajax({
+        url : 'change-qty-cart/' + slug + '/',
+        type : "POST",
+        data : {
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            qty: step
+        }
+    })
+}
+</script>
+{% endblock js %}
